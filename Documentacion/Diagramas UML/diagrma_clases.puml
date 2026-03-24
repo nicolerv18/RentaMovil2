@@ -1,4 +1,5 @@
 @startuml
+'Observer(Objetos: Vehiculo, reserva / sujetos: Administrador, Cliente *Los observadores, cliente y administrador, se les envia notficicaciones sobre el estado de la reserva y el vehiculo*) -  command(reserva tendria fus funciones desacopladas de la clase, crearReserva, CancelarReserva, EditarReserva)- singleton(Para poder generar solo una instancia por cada vez q se cree un objeto en la clase notificacion. Ademas de crear una unica instancia para las reservas y vehiculos.) - strategy(Se necesitan para en el tiempo de ejecucion se le pueda ofrecer al cliente una serie de estrategias de pago.)- factory-method(se emplearia para la creacion de distintos tipos de vehiculos)'
 interface Observador {
     +actualizar(mensaje: String)
 }
@@ -8,6 +9,7 @@ interface Sujeto {
     +eliminarObservador(o: Observador)
     +notificar(mensaje: String)
 }
+
 
 class Notificaciones {
     -observadores: List<Observador>
@@ -32,7 +34,7 @@ class Vehiculo {
     -kilometraje : double
     -precio : double
     -mantenimientos: List <Mantenimiento>
-   +agregarMatenimiento(: mantenimiento)
+    +agregarMatenimiento(: mantenimiento)
 }
 
 class Mantenimiento {
@@ -60,13 +62,13 @@ class Usuario {
     -telefono : String
     -contraseña : String
     -tipoUsuario : String
-     +actualizar(message: String)
- 
+    +actualizar(message: String)
+
 }
 class Seguro{
- -fechaVencimiento
- - vehiculo
- -notificaciones : Notificaciones
+-fechaVencimiento
+- vehiculo
+-notificaciones : Notificaciones
 +actualizarPago()
 +notificarVencimiento()
 }
@@ -78,10 +80,10 @@ class GPS {
 }
 
 class Ruta {
-    +origen: String
-    +destino: String
-    +recorrido: List<String>
-    +tiempoTotal: float
+    -origen: String
+    -destino: String
+    -recorrido: List<String>
+    -tiempoTotal: float
 }
 
 class Alquiler {
