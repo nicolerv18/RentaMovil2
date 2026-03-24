@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-import { useState } from 'react'
-
-=======
->>>>>>> origin
 import './App.css'
 
 function App() {
