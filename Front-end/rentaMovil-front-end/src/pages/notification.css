@@ -1,0 +1,51 @@
+
+
+
+.line-vertical {
+  position: absolute;
+  width: 2px;
+
+  height: 700px;
+  background-color: rgb(245, 245, 245);
+
+  left: 700px;
+  top: 190px; 
+}
+
+.notification-page {
+  padding: 20px;
+}
+.header-page {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 80px;
+}
+
+.header-page button {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+}
+.notification {
+  position: relative;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid black;
+  padding: 10px 0;
+}
+
+.icon {
+  position: absolute;
+  left: 10px;
+}
+
+.text {
+  width: 100%;
+  text-align: center;
+  padding-left: 30px;
+  color: black;
+}   
