@@ -1,3 +1,4 @@
+
 import './App.css'
 import Notification from './pages/notification';
 
@@ -7,6 +8,5 @@ function App() {
       <Notification />
     </></>
   );
-
 }
 export default App;
