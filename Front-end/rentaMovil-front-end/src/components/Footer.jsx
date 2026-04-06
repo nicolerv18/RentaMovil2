@@ -18,7 +18,7 @@ return (
         <div className="footer-brand">
             <h2>
                 <FaCar className="icon2" />
-                RentaMovils
+                RentaMovil
             </h2>
             <p>Tu plataforma de alquiler de vehículos</p>
             </div>
