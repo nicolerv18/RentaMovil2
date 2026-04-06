@@ -7,7 +7,7 @@ function Notification() {
   const navigate = useNavigate();
 
   return (
-    <div className="notification-page">
+    <div className="notification-page"> 
         <div className="line-vertical"></div>
       {/* HEADER */}
       <div className="header-page">
@@ -19,12 +19,12 @@ function Notification() {
       <div className="content">
         <Container title="Recibidas">   
   <div className="notification">
-    <span className="icon">👤</span>
+    <span className="icon-notification">👤</span>
     <p className="text">Tienes una nueva notificación</p>
   </div>
 
   <div className="notification">
-    <span className="icon">👤</span>
+    <span className="icon-notification">👤</span>
     <p className="text">Tu reserva fue confirmada</p>
   </div>
 </Container>

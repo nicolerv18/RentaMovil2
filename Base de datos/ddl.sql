@@ -1,123 +1,246 @@
-Use RentaMovil;
-go
 
 
--- Creación de la tabla Tipo_mantenimiento
-CREATE TABLE Tipo_mantenimiento (
-    id_tipo_ma INT PRIMARY KEY,
-    nombre VARCHAR(255) NOT NULL,
-    descripcion VARCHAR(255)
+CREATE TABLE Branch (
+  branch_id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(100),
+  address VARCHAR(150),
+  city VARCHAR(50),
+  phone VARCHAR(20),
+  shedules VARCHAR(100)
 );
 
--- Creación de la tabla Sucursal
-CREATE TABLE Sucursal (
-    id_sucursal INT PRIMARY KEY,
-    nombre VARCHAR(255) NOT NULL,
-    direccion VARCHAR(255),
-    ciudad VARCHAR(255),
-    telefono INT
+CREATE TABLE Person (
+  person_id INT AUTO_INCREMENT PRIMARY KEY,
+  first_name VARCHAR(50),
+  last_name VARCHAR(50),
+  email VARCHAR(100),
+  phone VARCHAR(20),
+  branch_id INT,
+  FOREIGN KEY (branch_id) REFERENCES Branch(branch_id)
 );
 
--- Creación de la tabla Persona
-CREATE TABLE Persona (
-    id_persona INT PRIMARY KEY,
-    nombre VARCHAR(255) NOT NULL,
-    apellido VARCHAR(255) NOT NULL,
-    correo VARCHAR(255) UNIQUE,
-    telefono BIGINT,
-    password VARCHAR(255) NOT NULL,
-    tipo_usu VARCHAR(255) NOT NULL, -- Administrador, Cliente, Empleado, etc.
-    permiso_aquilar VARCHAR(255), -- Podría ser un tipo ENUM o restringido si es necesario
-    id_sucursal INT,
-    
-    FOREIGN KEY (id_sucursal) REFERENCES Sucursal(id_sucursal)
+CREATE TABLE User (
+  user_id INT AUTO_INCREMENT PRIMARY KEY,
+  person_id INT UNIQUE,
+  username VARCHAR(50),
+  password_hash VARCHAR(255),
+  status VARCHAR(20),
+  last_login DATETIME,
+  FOREIGN KEY (person_id) REFERENCES Person(person_id)
 );
 
--- Creación de la tabla Vehiculo
-CREATE TABLE Vehiculo (
-    id_vehiculo INT PRIMARY KEY,
-    placa VARCHAR(255) UNIQUE NOT NULL,
-    marca VARCHAR(255),
-    modelo VARCHAR(255),
-    anio INT,
-    tipo_vehiculo VARCHAR(255),
-    estado VARCHAR(255) NOT NULL, -- Disponible, En Renta, En Mantenimiento, etc.
-    id_sucursal INT,
-    
-    FOREIGN KEY (id_sucursal) REFERENCES Sucursal(id_sucursal)
+CREATE TABLE Role (
+  role_id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(50),
+  description VARCHAR(150)
 );
 
--- Creación de la tabla Ubicacion_gps
-CREATE TABLE Ubicacion_gps (
-    id_ubicacion INT PRIMARY KEY,
-    latitud VARCHAR(255) NOT NULL,
-    longitud VARCHAR(255) NOT NULL,
-    timestamp DATETIME NOT NULL,
-    id_vehiculo INT,
-    
-    FOREIGN KEY (id_vehiculo) REFERENCES Vehiculo(id_vehiculo)
+CREATE TABLE Permission (
+  permission_id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(50),
+  description VARCHAR(150)
 );
 
--- Creación de la tabla Mantenimiento_vehiculo
-CREATE TABLE Mantenimiento_vehiculo (
-    id_mantenimiento INT PRIMARY KEY,
-    id_vehiculo INT,
-    id_tipo_ma INT,
-    fecha_inicio DATE NOT NULL,
-    fecha_fin DATE,
-    estado VARCHAR(255) NOT NULL, -- En curso, Completado, Programado, etc.
-    
-    FOREIGN KEY (id_vehiculo) REFERENCES Vehiculo(id_vehiculo),
-    FOREIGN KEY (id_tipo_ma) REFERENCES Tipo_mantenimiento(id_tipo_ma)
+CREATE TABLE Role_Permission (
+  role_id INT,
+  permission_id INT,
+  PRIMARY KEY (role_id, permission_id),
+  FOREIGN KEY (role_id) REFERENCES Role(role_id),
+  FOREIGN KEY (permission_id) REFERENCES Permission(permission_id)
 );
 
--- Creación de la tabla Reserva
-CREATE TABLE Reserva (
-    id_reserva INT PRIMARY KEY,
-    id_cliente INT, -- id_persona del tipo Cliente
-    id_vehiculo INT,
-    fecha_reserva DATE NOT NULL,
-    fecha_inicio DATE NOT NULL,
-    fecha_fin DATE NOT NULL,
-    tipo_res VARCHAR(255),
-    valor_total DOUBLE PRECISION NOT NULL, -- DOUBLE PRECISION para SQL Server (equivale a DOUBLE o FLOAT)
-    estado VARCHAR(255) NOT NULL, -- Pendiente, Confirmada, Cancelada, etc.
-    sucursal_recog INT,
-    sucursal_entre INT,
-    condicion_vehiculo VARCHAR(255),
-    
-    FOREIGN KEY (id_cliente) REFERENCES Persona(id_persona),
-    FOREIGN KEY (id_vehiculo) REFERENCES Vehiculo(id_vehiculo),
-    FOREIGN KEY (sucursal_recog) REFERENCES Sucursal(id_sucursal),
-    FOREIGN KEY (sucursal_entre) REFERENCES Sucursal(id_sucursal)
+CREATE TABLE User_Role (
+  user_id INT,
+  role_id INT,
+  PRIMARY KEY (user_id, role_id),
+  FOREIGN KEY (user_id) REFERENCES User(user_id),
+  FOREIGN KEY (role_id) REFERENCES Role(role_id)
 );
 
--- Creación de la tabla Pago
-CREATE TABLE Pago (
-    id_pago INT PRIMARY KEY,
-    id_reserva INT,
-    id_contrato INT, -- Asumiendo que esta FK apunta a una tabla de Contrato no mostrada, o es una referencia a algo más. Si es a Reserva, se cambia. Aquí se mantiene como se ve en el diagrama.
-    fecha_pago DATE NOT NULL,
-    monto DOUBLE PRECISION NOT NULL,
-    metodo VARCHAR(255),
-    
-    FOREIGN KEY (id_reserva) REFERENCES Reserva(id_reserva)
-    -- Asumiendo que id_contrato no es FK a una tabla mostrada.
+CREATE TABLE Audit (
+  audit_id INT AUTO_INCREMENT PRIMARY KEY,
+  user_id INT,
+  action VARCHAR(100),
+  affected_table VARCHAR(100),
+  date DATETIME,
+  detail VARCHAR(255),
+  FOREIGN KEY (user_id) REFERENCES User(user_id)
 );
 
--- Creación de la tabla Notificacion
-CREATE TABLE Notificacion (
-    id_notificacion INT PRIMARY KEY,
-    id_persona INT,
-    mensaje VARCHAR(255) NOT NULL,
-    fecha_envio DATETIME NOT NULL,
-    leido BIT NOT NULL, -- BIT para booleano en SQL Server
-    id_reserva INT,
-    id_mantenimiento INT,
-    id_pago INT,
-    
-    FOREIGN KEY (id_persona) REFERENCES Persona(id_persona),
-    FOREIGN KEY (id_reserva) REFERENCES Reserva(id_reserva),
-    FOREIGN KEY (id_mantenimiento) REFERENCES Mantenimiento_vehiculo(id_mantenimiento),
-    FOREIGN KEY (id_pago) REFERENCES Pago(id_pago)
+
+
+
+CREATE TABLE Vehicle (
+  vehicle_id INT AUTO_INCREMENT PRIMARY KEY,
+  plate VARCHAR(20),
+  brand VARCHAR(50),
+  model VARCHAR(50),
+  year INT,
+  type VARCHAR(50),
+  status VARCHAR(20),
+  mileage DOUBLE,
+  price DOUBLE,
+  branch_id INT,
+  FOREIGN KEY (branch_id) REFERENCES Branch(branch_id)
 );
+
+CREATE TABLE Asignation (
+  asignation_id INT AUTO_INCREMENT PRIMARY KEY,
+  vehicle_id INT,
+  branch_id INT,
+  checkIn_date DATE,
+  checkOut_date DATE,
+  FOREIGN KEY (vehicle_id) REFERENCES Vehicle(vehicle_id),
+  FOREIGN KEY (branch_id) REFERENCES Branch(branch_id)
+);
+
+CREATE TABLE Location (
+  location_id INT AUTO_INCREMENT PRIMARY KEY,
+  latitude VARCHAR(50),
+  longitude VARCHAR(50),
+  timestamp DATETIME,
+  vehicle_id INT,
+  FOREIGN KEY (vehicle_id) REFERENCES Vehicle(vehicle_id)
+);
+
+CREATE TABLE Route (
+  route_id INT AUTO_INCREMENT PRIMARY KEY,
+  location_id INT,
+  distance DOUBLE,
+  estimated_time DOUBLE,
+  origin VARCHAR(100),
+  destination VARCHAR(100),
+  FOREIGN KEY (location_id) REFERENCES Location(location_id)
+);
+
+CREATE TABLE Vehicle_Status_History (
+  history_id INT AUTO_INCREMENT PRIMARY KEY,
+  vehicle_id INT,
+  status VARCHAR(20),
+  start_date DATE,
+  end_date DATE,
+  FOREIGN KEY (vehicle_id) REFERENCES Vehicle(vehicle_id)
+);
+CREATE TABLE Reservation (
+  reservation_id INT AUTO_INCREMENT PRIMARY KEY,
+  client_id INT,
+  reservation_date DATE,
+  status VARCHAR(20),
+  FOREIGN KEY (client_id) REFERENCES Person(person_id)
+);
+
+CREATE TABLE Reservation_Detail (
+  detail_id INT AUTO_INCREMENT PRIMARY KEY,
+  reservation_id INT,
+  vehicle_id INT,
+  ResponsibleName VARCHAR(100),
+  start_date DATE,
+  end_date DATE,
+  pickupTime TIME,
+  returnTime TIME,
+  pickupLocation VARCHAR(100),
+  returnLocation VARCHAR(100),
+  amountToPay DOUBLE,
+  totalValue DOUBLE,
+  FOREIGN KEY (reservation_id) REFERENCES Reservation(reservation_id),
+  FOREIGN KEY (vehicle_id) REFERENCES Vehicle(vehicle_id)
+);
+CREATE TABLE Gps (
+  gps_id INT AUTO_INCREMENT PRIMARY KEY,
+  serial VARCHAR(50),
+  model VARCHAR(50),
+  available BOOLEAN
+);
+
+CREATE TABLE Rental (
+  rental_id INT AUTO_INCREMENT PRIMARY KEY,
+  reservation_id INT UNIQUE,
+  route_id INT,
+  location_id INT,
+  gps_id INT,
+  status VARCHAR(20),
+  start_date DATE,
+  end_date DATE,
+  FOREIGN KEY (reservation_id) REFERENCES Reservation(reservation_id),
+  FOREIGN KEY (route_id) REFERENCES Route(route_id),
+  FOREIGN KEY (location_id) REFERENCES Location(location_id),
+  FOREIGN KEY (gps_id) REFERENCES Gps(gps_id)
+);
+
+CREATE TABLE Contract (
+  contract_id INT AUTO_INCREMENT PRIMARY KEY,
+  start_date DATE,
+  end_date DATE,
+  reservation_id INT UNIQUE,
+  contract_date DATE,
+  terms VARCHAR(255),
+  amount DOUBLE,
+  description VARCHAR(255),
+  FOREIGN KEY (reservation_id) REFERENCES Reservation(reservation_id)
+);
+
+CREATE TABLE Maintenance_Type (
+  maintenance_type_id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(50),
+  description VARCHAR(150)
+);
+
+CREATE TABLE Vehicle_Maintenance (
+  maintenance_id INT AUTO_INCREMENT PRIMARY KEY,
+  vehicle_id INT,
+  maintenance_type_id INT,
+  start_date DATE,
+  end_date DATE,
+  status VARCHAR(20),
+  FOREIGN KEY (vehicle_id) REFERENCES Vehicle(vehicle_id),
+  FOREIGN KEY (maintenance_type_id) REFERENCES Maintenance_Type(maintenance_type_id)
+);
+
+CREATE TABLE Insurance (
+  insurance_id INT AUTO_INCREMENT PRIMARY KEY,
+  vehicle_id INT UNIQUE,
+  policy VARCHAR(100),
+  insurance VARCHAR(100),
+  start_date DATE,
+  end_date DATE,
+  status VARCHAR(20),
+  FOREIGN KEY (vehicle_id) REFERENCES Vehicle(vehicle_id)
+);
+
+
+CREATE TABLE Payment_Method (
+  method_id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(50)
+);
+
+CREATE TABLE Payment (
+  payment_id INT AUTO_INCREMENT PRIMARY KEY,
+  reservation_id INT,
+  payment_date DATE,
+  amount DOUBLE,
+  method_id INT,
+  FOREIGN KEY (reservation_id) REFERENCES Reservation(reservation_id),
+  FOREIGN KEY (method_id) REFERENCES Payment_Method(method_id)
+);
+
+
+CREATE TABLE Notification (
+  notification_id INT AUTO_INCREMENT PRIMARY KEY,
+  person_id INT,
+  message VARCHAR(255),
+  sent_date DATETIME,
+  is_read BOOLEAN,
+  reservation_id INT,
+  maintenance_id INT,
+  payment_id INT,
+  contract_id INT,
+  insurance_id INT,
+  FOREIGN KEY (person_id) REFERENCES Person(person_id),
+  FOREIGN KEY (reservation_id) REFERENCES Reservation(reservation_id),
+  FOREIGN KEY (maintenance_id) REFERENCES Vehicle_Maintenance(maintenance_id),
+  FOREIGN KEY (payment_id) REFERENCES Payment(payment_id),
+  FOREIGN KEY (contract_id) REFERENCES Contract(contract_id),
+  FOREIGN KEY (insurance_id) REFERENCES Insurance(insurance_id)
+);
+
+
