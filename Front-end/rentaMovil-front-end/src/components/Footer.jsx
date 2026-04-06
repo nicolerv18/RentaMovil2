@@ -18,14 +18,14 @@ return (
         <div className="footer-brand">
             <h2>
                 <FaCar className="icon2" />
-                RentaMovils
+                RentaMovil
             </h2>
             <p>Tu plataforma de alquiler de vehículos</p>
             </div>
         <div className="footer-contact">
         <h3>Contáctanos</h3>
-        <p>Tel: 3164763160</p>
-        <p>Calle 25 #36-60</p>
+        <p>📞 3164763160</p>
+        <p> 📍Calle 25 #36-60</p>
         </div>
     </div>
 
