@@ -7,6 +7,12 @@
   box-shadow: 0 8px 24px rgba(0,0,0,0.12);
   position: relative;
 }
+.container-banner {
+  width: 90%;           /* ← deja margen a los lados */
+  max-width: 100%;
+  margin: 24px auto;       /* ← centra */
+}
+
 .slides {
     display: flex;
     width: 300%; 
@@ -33,7 +39,7 @@
 
 .text-banner{
     padding: 16px;
-    font-size: 24px;
+    font-size: 18px;
     line-height: 1.5;
     text-align: center;
     color: #fff;

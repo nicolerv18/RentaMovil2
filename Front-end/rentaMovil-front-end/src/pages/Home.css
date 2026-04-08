@@ -1,9 +1,11 @@
 .home-container{
     display: grid;
-    grid-template-columns: 1fr 400px; /* izquierda contenido, derecha filtro */
+    grid-template-columns: 1fr 450px; /* izquierda contenido, derecha filtro */
     gap: 20px;
     padding: 20px;
     align-items: start;
+    max-width: 100px;
+    box-sizing: border-box;
 
 }
 
@@ -18,13 +20,15 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
-  right: 170px;
+  right: 172px;
   position: sticky;
   top: 40px;
 }
+
 .banner-container img {
   width: 450%;
 }
+
  @media (max-width: 900px) {
   .home-container {
     grid-template-columns: 1fr;
