@@ -3,9 +3,9 @@ import carro from '../assets/carro.png'
 
 function Reservation() {
 return(
-    <div className='container'>
-    <div className='card'>
-    <div className='card-header'>
+    <div className='containerR'>
+    <div className='cardR'>
+    <div className='card-headerR'>
     <img className="img-car" src={carro} alt="carro" />
     <h2 className='card-h2'>Toyota 4x4</h2>
     <p className='price'>$13,2444</p>
