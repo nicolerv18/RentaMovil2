@@ -2,7 +2,7 @@ import './App.css'
 
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
 import Reservation from  './pages/Reservation';
 import Count from './pages/Count';
 import Notificacion from "./pages/notification";
@@ -12,6 +12,12 @@ function App() {
   return (
     <BrowserRouter>
       <Navbar/>
+      {/* Navegación */}
+      <nav>
+        <Link to="/pago">Pago</Link>
+      </nav>
+
+      {/* Rutas */}
       <Routes>
         <Route path="/reservation" element={<Reservation/>} />
         <Route path="/count" element={<Count/>} />

@@ -10,7 +10,7 @@ return (
         <h3>Enlaces</h3>
     <div className="links">
         <Link to="/">Inicio</Link>
-        <Link to="/reservations">Notificaciones</Link>
+        <Link to="/notification">Notificaciones</Link>
         <Link to="/reservations">Cuenta</Link>
 
     </div>
