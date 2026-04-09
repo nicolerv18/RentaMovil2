@@ -10,7 +10,7 @@ return (
         <h3>Enlaces</h3>
     <div className="links">
         <Link to="/">Inicio</Link>
-        <Link to="/reservations">Notificaciones</Link>
+        <Link to="/notification">Notificaciones</Link>
         <Link to="/reservations">Cuenta</Link>
 
     </div>
@@ -18,7 +18,7 @@ return (
         <div className="footer-brand">
             <h2>
                 <FaCar className="icon2" />
-                RentaMovils
+                RentaMovil
             </h2>
             <p>Tu plataforma de alquiler de vehículos</p>
             </div>

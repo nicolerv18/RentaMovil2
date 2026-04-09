@@ -13,7 +13,6 @@ function App() {
       
       {/* Navegación */}
       <nav>
-        <Link to="/notification">Notificaciones</Link> |{" "}
         <Link to="/pago">Pago</Link>
       </nav>
 
