@@ -10,7 +10,7 @@ return (
         <h3>Enlaces</h3>
     <div className="links">
         <Link to="/">Inicio</Link>
-        <Link to="/reservations">Notificaciones</Link>
+        <Link to="/notification">Notificaciones</Link>
         <Link to="/reservations">Cuenta</Link>
 
     </div>
@@ -24,8 +24,8 @@ return (
             </div>
         <div className="footer-contact">
         <h3>Contáctanos</h3>
-        <p>Tel: 3164763160</p>
-        <p>Calle 25 #36-60</p>
+        <p>📞 3164763160</p>
+        <p> 📍Calle 25 #36-60</p>
         </div>
     </div>
 

@@ -1,12 +1,17 @@
-const containerText = ({ title, children }) => {
+import "./containerText.css";
+
+const ContainerText = ({ title, children }) => {
   return (
-    <div className="container">
-      {title && <h2 className="container-title">{title}</h2>}
+    <div className="card">
+
+      <div className="header">{title}</div>
+
       <div className="container-content">
         {children}
       </div>
+
     </div>
   );
 };
 
-export default containerText;
+export default ContainerText;

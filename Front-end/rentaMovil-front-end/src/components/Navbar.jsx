@@ -14,9 +14,9 @@ function Navbar(){
 
             <nav className='nav-links-container'>
                 <Link to="/cars">Inicio</Link>
-                <Link to="/pago">Notificaciones</Link>
+                <Link to="/notification">Notificaciones</Link>
                 <Link to="/reservation">Reservación</Link>
-                <MdPerson className='icon user-icon'/>
+                <Link to="/count"><MdPerson className='icon user-icon'/></Link>
             </nav>
 
         </header>
