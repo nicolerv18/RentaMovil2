@@ -14,7 +14,6 @@ import Pago from "./pages/page";
 function App() {
   return (
     <BrowserRouter>
-    <Navbar />
       {/* Navegación */}
       <nav>
         <Link to="/pago">Pago</Link>
@@ -30,7 +29,6 @@ function App() {
         <Route path="/pago" element={<Pago/>} />
       </Routes>
 
-      <Footer />
     </BrowserRouter>
   );
 }
