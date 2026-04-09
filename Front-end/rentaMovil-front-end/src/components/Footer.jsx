@@ -11,7 +11,7 @@ return (
     <div className="links">
         <Link to="/">Inicio</Link>
         <Link to="/notification">Notificaciones</Link>
-        <Link to="/reservations">Cuenta</Link>
+        <Link to="/Count">Cuenta</Link>
 
     </div>
         </div>
